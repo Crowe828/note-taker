@@ -29,7 +29,7 @@ module.exports = (app) => {
 
     // DELETE note
     app.del("/api/notes/:id", function (req, res) {
-      notes.splice(req.params.id);
+      notes.splice(req.params.id, 1);
       savedNotes();
     });
 

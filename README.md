@@ -6,6 +6,10 @@
 
 A back end application that can be used to write, save, and delete notes. This application uses Express.js save and retrieve note data from a JSON file.
 
+## Deployment
+
+This application is deployed on Heroku and can be found [here.](https://dry-dawn-05181.herokuapp.com/notes)
+
 ## Table of Contents
 
 - [Images](#images)

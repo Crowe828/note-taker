@@ -1,13 +1,12 @@
-// Requirements
+// Require fs and util
 const fs = require("fs");
 const util = require("util");
-
-// So we can read/write notes
+// So we can read/write notes asynchronously
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 module.exports = (app) => {
-  // Setup notes variable
+  // Read the db and see if there is anything in it
   return readFileAsync("db/db.json", "utf8", (err, data) => {
     if (err) throw err;
 
@@ -15,35 +14,35 @@ module.exports = (app) => {
 
     // GET route
     app.get("/api/notes", function (req, res) {
-      res.json(notes);
+      res.json(notes).catch((err) => res.status(500).json(err));
     });
 
     // POST route
     app.post("/api/notes", function (req, res) {
-      let newNote = req.body;
+      const newNote = req.body;
       notes.push(newNote);
       savedNotes();
     });
 
-    // Retrieve a specific note
+    // GET a specific note
     app.get("/api/notes/:id", function (req, res) {
       res.json(notes[req.params.id]);
     });
 
-    // Delete a specific note
+    // DELETE a specific note
     app.delete("/api/notes/:id", function (req, res) {
       notes.splice(req.params.id, 1);
       savedNotes();
     });
 
-    // Updates the database when new notes are added
+    // Update the db
     function savedNotes() {
       return writeFileAsync(
         "db/db.json",
         JSON.stringify(notes, "\t"),
         (err) => {
           if (err) throw err;
-          return true;
+          res.json({ ok: true });
         }
       );
     }

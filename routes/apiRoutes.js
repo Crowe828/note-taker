@@ -10,41 +10,35 @@ module.exports = (app) => {
   return readFileAsync("db/db.json", "utf8", (err, data) => {
     if (err) throw err;
 
+    // If there is, parse it
     const notes = JSON.parse(data);
 
     // GET route
     app.get("/api/notes", function (req, res) {
+      // Get notes from db and display them
       res.json(notes).catch((err) => res.status(500).json(err));
     });
 
     // POST route
     app.post("/api/notes", function (req, res) {
+      // Add the new note to the notes const hooked into the db.json file
       const newNote = req.body;
       notes.push(newNote);
       savedNotes();
     });
 
-    // GET a specific note
-    app.get("/api/notes/:id", function (req, res) {
-      res.json(notes[req.params.id]);
-    });
-
-    // DELETE a specific note
-    app.delete("/api/notes/:id", function (req, res) {
-      notes.splice(req.params.id, 1);
+    // DELETE note
+    app.del("/api/notes/:id", function (req, res) {
+      notes.splice(req.params.id);
       savedNotes();
     });
 
-    // Update the db
+    // Update db.json
     function savedNotes() {
-      return writeFileAsync(
-        "db/db.json",
-        JSON.stringify(notes, "\t"),
-        (err) => {
-          if (err) throw err;
-          res.json({ ok: true });
-        }
-      );
+      return writeFileAsync("db/db.json", JSON.stringify(notes), (err) => {
+        if (err) throw err;
+        res.json({ ok: true });
+      });
     }
   });
 };

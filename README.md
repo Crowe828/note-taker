@@ -1,43 +1,56 @@
 # Note Taker
 
-Create an application that can be used to write, save, and delete notes. This application will use an express backend and save and retrieve note data from a JSON file.
+## Description
 
-## Descriptionnpm
+[![license-badge](https://img.shields.io/badge/License-MIT-red.svg)](https://shields.io/)
 
-Create an application that can be used to write, save, and delete notes. This application will use an express backend and save and retrieve note data from a JSON file.
+A back end application that can be used to write, save, and delete notes. This application uses Express.js save and retrieve note data from a JSON file.
 
-- The application frontend has already been created, it's your job to build the backend and connect the two.
+## Table of Contents
 
-- The following HTML routes should be created:
+- [Images](#images)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
+- [Contributing](#contributing)
+- [Tests](#tests)
+- [Questions](#tests)
 
-  - GET `/notes` - Should return the `notes.html` file.
+## Images
 
-  - GET `*` - Should return the `index.html` file
+- What the application looks like with a few notes saved in the database:
+  ![Note Taker](https://github.com/Crowe828/note-taker/blob/main/public/assets/images/note-taker.png)
 
-- The application should have a `db.json` file on the backend that will be used to store and retrieve notes using the `fs` module.
+## Installation
 
-- The following API routes should be created:
+```
+[Terminal] git pull https://github.com/Crowe828/note-taker
+```
 
-  - GET `/api/notes` - Should read the `db.json` file and return all saved notes as JSON.
+## Usage
 
-  - POST `/api/notes` - Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
+Simply load the webpage and enter your notes, click save, and they will be stored there for the next time you use the site. You can also delete notes you no longer need.
 
-  - DELETE `/api/notes/:id` - Should receive a query parameter containing the id of a note to delete. This means you'll need to find a way to give each note a unique `id` when it's saved. In order to delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
+## License
 
-## User Story
+This project is covered under the MIT License.
 
-AS A user, I want to be able to write and save notes
-I WANT to be able to delete notes I've written before
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
+## Contributing
 
-## Acceptance Criteria
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please make sure to update tests as appropriate.
 
-- Application should allow users to create and save notes.
+## Tests
 
-- Application should allow users to view previously saved notes.
+```
+console.log(test);
+The console will display the word 'test'
+```
 
-- Application should allow users to delete previously saved notes.
+## Questions
 
-## Deploying the App
+If you would like to learn more, feel free to check out my GitHub or send me an email anytime.
 
-You will not be able to deploy your server side code on GitHub pages. This app should be deployed on Heroku. Carefully follow the [Heroku Guide](../04-Important/HerokuGuide.md) for getting your app deployed on Heroku.
+- [GitHub](https://github.com/crowe828)
+- [Repo](https://github.com/Crowe828/note-taker)
+- [Email Me](mailto:crowe828@gmail.com?subject=Nice%20README%20Generator%20Dude)

@@ -1,44 +1,28 @@
-// Require fs and util
-const fs = require("fs");
-const util = require("util");
-// So we can read/write notes asynchronously
-const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
+const router = require("express").Router();
+const store = require("../db/store");
 
-module.exports = (app) => {
-  // Read the db and see if there is anything in it
-  return readFileAsync("db/db.json", "utf8", (err, data) => {
-    if (err) throw err;
+// Get all notes from the db
+router.get("/notes", (req, res) => {
+  store
+    .getNotes()
+    .then((notes) => res.json(notes))
+    .catch((err) => res.status(500).json(err));
+});
 
-    // If there is, parse it
-    const notes = JSON.parse(data);
+// Post new notes to the db
+router.post("/notes", (req, res) => {
+  store
+    .addNote(req.body)
+    .then((note) => res.json(note))
+    .catch((err) => res.status(500).json(err));
+});
 
-    // GET route
-    app.get("/api/notes", function (req, res) {
-      // Get notes from db and display them
-      res.json(notes).catch((err) => res.status(500).json(err));
-    });
+// Delete specific notes
+router.delete("/notes/:id", (req, res) => {
+  store
+    .removeNote(req.params.id)
+    .then(() => res.json({ ok: true }))
+    .catch((err) => res.status(500).json(err));
+});
 
-    // POST route
-    app.post("/api/notes", function (req, res) {
-      // Add the new note to the notes const hooked into the db.json file
-      const newNote = req.body;
-      notes.push(newNote);
-      savedNotes();
-    });
-
-    // DELETE note
-    app.del("/api/notes/:id", function (req, res) {
-      notes.splice(req.params.id, 1);
-      savedNotes();
-    });
-
-    // Update db.json
-    function savedNotes() {
-      return writeFileAsync("db/db.json", JSON.stringify(notes), (err) => {
-        if (err) throw err;
-        res.json({ ok: true });
-      });
-    }
-  });
-};
+module.exports = router;

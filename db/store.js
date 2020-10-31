@@ -1,4 +1,4 @@
-Dependencies;
+// Dependencies
 const util = require("util");
 const fs = require("fs");
 // Generates unique IDs
